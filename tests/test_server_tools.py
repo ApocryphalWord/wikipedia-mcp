@@ -491,8 +491,8 @@ class TestMCPServerTools:
         tool_names = asyncio.run(gather_tools())
         assert "test_wikipedia_connectivity" in tool_names
 
-    def test_all_tool_descriptions_present_for_canonical_and_alias_tools(self):
-        """Ensure canonical tools and wikipedia_ aliases expose descriptions."""
+    def test_all_tool_descriptions_present_without_aliases(self):
+        """Ensure canonical tools expose descriptions and no wikipedia_ aliases exist."""
         server = create_server()
         assert server is not None
 
@@ -520,9 +520,10 @@ class TestMCPServerTools:
             assert canonical_description
             assert canonical_description.startswith(expected_description)
 
-            alias_name = f"wikipedia_{tool_name}"
-            assert alias_name in tools
-            assert tools[alias_name].description == canonical_description
+            # Tools are registered under their canonical name only; the
+            # wikipedia_-prefixed aliases were removed to avoid duplicated
+            # tool listings in MCP clients.
+            assert f"wikipedia_{tool_name}" not in tools
 
 
 class TestIntegration:

@@ -64,8 +64,8 @@ class TestGoogleADKCompatibility:
             assert annotations.destructiveHint is False
 
     @pytest.mark.asyncio
-    async def test_all_canonical_tools_have_wikipedia_aliases(self):
-        """Each canonical tool should expose a wikipedia_* alias."""
+    async def test_canonical_tools_registered_without_aliases(self):
+        """Each canonical tool is registered once, with no wikipedia_* alias."""
         server = create_server()
         tools = await get_tools(server)
 
@@ -85,7 +85,7 @@ class TestGoogleADKCompatibility:
 
         for tool_name in canonical_tools:
             assert tool_name in tools
-            assert f"wikipedia_{tool_name}" in tools
+            assert f"wikipedia_{tool_name}" not in tools
 
     @pytest.mark.asyncio
     async def test_all_tools_have_object_output_schema(self):

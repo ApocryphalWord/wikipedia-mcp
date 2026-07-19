@@ -286,8 +286,6 @@ To find the full path, run: `which wikipedia-mcp`
 
 The Wikipedia MCP server provides the following tools for LLMs to interact with Wikipedia:
 
-Each tool is also exposed with a `wikipedia_`-prefixed alias (for example, `wikipedia_get_article`) for improved cross-server discoverability.
-
 ### `search_wikipedia`
 
 Search Wikipedia for articles matching a query.

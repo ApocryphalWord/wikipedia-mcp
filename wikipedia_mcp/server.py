@@ -167,12 +167,6 @@ def create_server(
                 annotations=_READ_ONLY_TOOL_ANNOTATIONS,
                 output_schema=output_schema,
             )
-            server.tool(
-                func,
-                name=f"wikipedia_{name}",
-                annotations=_READ_ONLY_TOOL_ANNOTATIONS,
-                output_schema=output_schema,
-            )
             return func
 
         return decorator
