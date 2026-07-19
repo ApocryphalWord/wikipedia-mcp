@@ -147,6 +147,17 @@ wikipedia-mcp --access-token your_wikipedia_token_here
 export WIKIPEDIA_ACCESS_TOKEN=your_wikipedia_token_here
 wikipedia-mcp
 
+# Optional: Set a custom User-Agent (recommended for self-hosted deployments).
+# Wikimedia's User-Agent policy asks operators to identify their app and provide
+# a contact; a distinct UA also avoids sharing rate-limit reputation with every
+# other deployment of this server. For persistent 429s, an access token and/or
+# --enable-cache help more than the UA alone.
+wikipedia-mcp --user-agent "MyApp/1.0 (https://example.com/contact)"
+
+# Or set via environment variable (e.g. in Railway)
+export WIKIPEDIA_USER_AGENT="MyApp/1.0 (https://example.com/contact)"
+wikipedia-mcp
+
 # Optional: Secure incoming MCP network requests with static bearer token
 wikipedia-mcp --transport http --auth-mode static --auth-token your_mcp_token --host 0.0.0.0 --port 8080
 

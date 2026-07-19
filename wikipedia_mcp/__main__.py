@@ -125,6 +125,16 @@ def main() -> None:
         type=str,
         help=("Access token for Wikipedia API (optional). " "Can also be set via WIKIPEDIA_ACCESS_TOKEN."),
     )
+    parser.add_argument(
+        "--user-agent",
+        type=str,
+        default=None,
+        help=(
+            "Custom User-Agent header for Wikipedia API requests (optional). "
+            "Can also be set via WIKIPEDIA_USER_AGENT. A distinct, contactable "
+            "User-Agent is recommended for self-hosted deployments."
+        ),
+    )
 
     # MCP server auth options (separate from Wikipedia API token)
     parser.add_argument(
@@ -242,6 +252,7 @@ def main() -> None:
         parser.error(str(exc))
 
     access_token = args.access_token or os.getenv("WIKIPEDIA_ACCESS_TOKEN")
+    user_agent = args.user_agent or os.getenv("WIKIPEDIA_USER_AGENT")
 
     try:
         server = create_server(
@@ -249,6 +260,7 @@ def main() -> None:
             country=args.country,
             enable_cache=args.enable_cache,
             access_token=access_token,
+            user_agent=user_agent,
             auth_config=auth_config,
         )
     except ValueError as exc:

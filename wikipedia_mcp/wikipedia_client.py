@@ -21,6 +21,13 @@ logger = logging.getLogger(__name__)
 class WikipediaClient:
     """Client for interacting with the Wikipedia API."""
 
+    # Default User-Agent for outgoing Wikipedia API requests. Wikimedia's
+    # User-Agent policy asks operators to identify their application and
+    # provide a way to be contacted; this fork's URL serves that purpose.
+    # Override per-deployment via the WIKIPEDIA_USER_AGENT env var or
+    # the --user-agent CLI flag.
+    DEFAULT_USER_AGENT = f"WikipediaMCP-Apocryph/{__version__} (https://github.com/apocryphalword/wikipedia-mcp)"
+
     # Language variant mappings - maps variant codes to their base language
     LANGUAGE_VARIANTS = {
         "zh-hans": "zh",  # Simplified Chinese
@@ -267,6 +274,7 @@ class WikipediaClient:
         country: Optional[str] = None,
         enable_cache: bool = False,
         access_token: Optional[str] = None,
+        user_agent: Optional[str] = None,
     ):
         """
         Initialize the Wikipedia client.
@@ -279,6 +287,10 @@ class WikipediaClient:
             enable_cache: Whether to enable caching for API calls (default: False).
             access_token: Personal Access Token for Wikipedia API authentication (optional).
                           Used to increase rate limits and avoid 403 errors.
+            user_agent: Custom User-Agent header for Wikipedia API requests (optional).
+                        A distinct, contactable User-Agent is recommended for
+                        self-hosted deployments per Wikimedia's User-Agent policy.
+                        Falls back to DEFAULT_USER_AGENT when not provided.
         """
         # Resolve country to language if country is provided
         if country:
@@ -297,7 +309,9 @@ class WikipediaClient:
 
         self.enable_cache = enable_cache
         self.access_token = access_token
-        self.user_agent = f"WikipediaMCPServer/{__version__} (https://github.com/rudra-ravi/wikipedia-mcp)"
+        # Use the provided User-Agent when set (ignoring empty/whitespace-only
+        # values), otherwise fall back to this fork's default.
+        self.user_agent = user_agent.strip() if user_agent and user_agent.strip() else self.DEFAULT_USER_AGENT
 
         # Parse language and variant
         self.base_language, self.language_variant = self._parse_language_variant(self.resolved_language)

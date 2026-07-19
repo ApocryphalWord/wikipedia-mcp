@@ -122,6 +122,7 @@ def create_server(
     country: Optional[str] = None,
     enable_cache: bool = False,
     access_token: Optional[str] = None,
+    user_agent: Optional[str] = None,
     auth_config: Optional[AuthConfig] = None,
     auth_mode: str = "none",
     auth_public_key: Optional[str] = None,
@@ -155,6 +156,7 @@ def create_server(
         country=country,
         enable_cache=enable_cache,
         access_token=access_token,
+        user_agent=user_agent,
     )
 
     def register_tool(name: str, output_schema: dict[str, Any]):

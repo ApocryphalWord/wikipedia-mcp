@@ -86,9 +86,10 @@ See `docs/API.md` for full schemas and example responses.
 - Empty search results:
   - Run `test_wikipedia_connectivity` to check network.
   - Verify query spelling and try broader terms.
-- 403/rate limits:
-  - Provide `--access-token` or set `WIKIPEDIA_ACCESS_TOKEN`.
-  - Reduce request frequency.
+- 403/429 rate limits:
+  - Set a distinct `--user-agent` / `WIKIPEDIA_USER_AGENT` so your traffic is identified separately (per Wikimedia's User-Agent policy).
+  - Provide `--access-token` or set `WIKIPEDIA_ACCESS_TOKEN` (strongest lever for higher limits).
+  - Enable `--enable-cache` and reduce request frequency.
 - SSE exposure:
   - Protect with reverse proxy auth or restrict network access.
 - Country/language conflicts:

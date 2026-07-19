@@ -8,7 +8,7 @@ This document describes the `wikipedia-mcp` command-line options and usage.
 wikipedia-mcp [--transport stdio|http|streamable-http|sse] [--path <endpoint>] \
               [--language <code>] [--country <code|name>] [--list-countries] \
               [--host <host>] [--port <port>] [--enable-cache] \
-              [--access-token <token>] \
+              [--access-token <token>] [--user-agent <string>] \
               [--auth-mode none|static|jwt] [--auth-token <token>] \
               [--auth-public-key <pem>] [--auth-jwks-uri <uri>] \
               [--auth-issuer <issuer>] [--auth-audience <aud>] \
@@ -30,6 +30,7 @@ wikipedia-mcp [--transport stdio|http|streamable-http|sse] [--path <endpoint>] \
 - `--port` (default: `8000`): Bind port for network transports.
 - `--enable-cache`: Enable in-process LRU caching for Wikipedia API calls.
 - `--access-token`: Wikipedia API token (client-side Wikipedia request auth). Also supports `WIKIPEDIA_ACCESS_TOKEN`.
+- `--user-agent`: Custom User-Agent header for outbound Wikipedia API requests. Also supports `WIKIPEDIA_USER_AGENT`. Recommended for self-hosted deployments so traffic is identified with a distinct, contactable UA per Wikimedia's User-Agent policy.
 
 ### MCP Server Transport Auth (`--auth-*`)
 
